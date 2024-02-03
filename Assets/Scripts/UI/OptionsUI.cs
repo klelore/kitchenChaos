@@ -11,9 +11,25 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Button soundEffectsBtn;
     [SerializeField] private Button musicBtn;
     [SerializeField] private Button backBtn;
+    [SerializeField] private Button moveUpBtn;
+    [SerializeField] private Button moveDownBtn;
+    [SerializeField] private Button moveLeftBtn;
+    [SerializeField] private Button moveRightBtn;
+    [SerializeField] private Button interactBtn;
+    [SerializeField] private Button interactAltBtn;
+    [SerializeField] private Button pauseBtn;
 
     [SerializeField] private TextMeshProUGUI soundEffectsText;
     [SerializeField] private TextMeshProUGUI musicText;
+    [SerializeField] private TextMeshProUGUI moveUpText;
+    [SerializeField] private TextMeshProUGUI moveDownText;
+    [SerializeField] private TextMeshProUGUI moveLeftText;
+    [SerializeField] private TextMeshProUGUI moveRightText;
+    [SerializeField] private TextMeshProUGUI interactText;
+    [SerializeField] private TextMeshProUGUI interactAltText;
+    [SerializeField] private TextMeshProUGUI pauseText;
+
+    [SerializeField] private Transform presstoRebindKeyTranform;
 
     private void Awake()
     {
@@ -34,6 +50,12 @@ public class OptionsUI : MonoBehaviour
             Hide();
             GamePauseUI.Instance.Show();
         });
+
+        moveUpBtn.onClick.AddListener(() =>
+        {
+            GameInput.Instance.RebingBinding(GameInput.Binding.Move_Up);
+        });
+
        
     }
 
@@ -48,6 +70,14 @@ public class OptionsUI : MonoBehaviour
         soundEffectsText.text = "音效大小：" + Mathf.Round(SoundManager.Instance.GetVolume() * 10f);
         musicText.text = "声音大小：" + Mathf.Round(MusicManager.Instance.GetVolume() * 10f);
 
+        moveUpText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Up);
+        moveDownText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Down);
+        moveLeftText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Left);
+        moveRightText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Right);
+        interactText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Interact);
+        interactAltText.text = GameInput.Instance.GetBindingText(GameInput.Binding.InteractAlt);
+        pauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Pause);
+
     }
 
     public void Show()
@@ -57,5 +87,15 @@ public class OptionsUI : MonoBehaviour
     public void Hide()
     {
         gameObject?.SetActive(false);
+    }
+
+
+    public void ShowPressToRebindKey()
+    {
+        presstoRebindKeyTranform.gameObject.SetActive(true);
+    }
+    public void HidePressToRebindKey()
+    {
+        presstoRebindKeyTranform.gameObject.SetActive(false);
     }
 }
